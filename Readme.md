@@ -20,7 +20,7 @@ To run DSAUtilities you need NPM wich comes with Node.js
 
 Just run the following code in the project folder:
  
- `npm install && nmp start`
+ `npm install && npm start`
 
 
 
