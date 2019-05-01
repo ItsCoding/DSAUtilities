@@ -1,29 +1,30 @@
 ## **DSAUtilities**
 
-DSAUtilities is a pen&paper toolbox if u have an big screen instead of an old whiteboard.  
-It is made to assist the GM (Gamemaster) while he can concentrate on storytelling.  
-At the moment this is optimized for DSA (german: Das schwarze Auge, english:The Dark Eye) but this is only related to the rule search.
+DSAUtilities is a pen&paper toolbox to assist the Dungeonmaster. It is developed to facilitate the DM's work by giving him an interactive whiteboard to draw and place icons. Dices and healthbars for NPC's are meant to help him/her track stats of his/her own characters, while playertracking remains analog. I chose this approach to keep the DM from having more information than in a usual pen&paper game. 
+At the moment, the program is optimized for DSA (german: Das schwarze Auge, english:The Dark Eye) but this is only related to the rule search.
 
 #### Functions:
- * Digital whiteboard , draw with mouse or OS compatible drawpads such as Wacom Bamboo  
- * Icon Editor , create your own Icons in the Studio
- * Healthmanagment , dont write npc liefs on paper and waste lovely Trees
- * Safe your draws as Background and prepare the next Story before you play it
- * A Grid , which helps you with positioning
- * Rule search , save the time crawling in books
- * Take notes in the notebox , and never use paper again
- * Safe your creation as a , developer friendly, JSON single file
- * And many more...
+ * Digital whiteboard - draw with mouse or OS compatible graphics tablet
+ * Icon Editor - you can create your own Icons in the Studio
+ * Healthmanagment - track and change NPC health
+ * Dices - keep rolling..
+ * Safe your drawings as backgrounds and prepare stories before the session
+ * A Grid - helps with positioning
+ * Rule search - save time crawling books
+ * Take notes in the notebox - and never use paper again
+ * Safe your creation as a - developer friendly - JSON single file
+ * And much more... (in the future)
 
 #### How to start:
-To run DSAUtilities you need NPM wich comes with Node.js  
+To run DSAUtilities you need NPM wich comes with Node.js
 
-`npm install && nmp start`
+Just run the following code in your beloved terminal:
+ 
+ `npm install && nmp start`
 
 
 
-
- This tool is made in Electron.js combined with many modules , Bootswatch and jQuery
+ This tool is made in Electron.js combined with many modules - e.g. Bootswatch and jQuery
 
  Special thanks to:
 
