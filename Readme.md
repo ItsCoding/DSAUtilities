@@ -18,7 +18,7 @@ At the moment, the program is optimized for DSA (german: Das schwarze Auge, engl
 #### How to start:
 To run DSAUtilities you need NPM wich comes with Node.js
 
-Just run the following code in your beloved terminal:
+Just run the following code in the project folder:
  
  `npm install && nmp start`
 
