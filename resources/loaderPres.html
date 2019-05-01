@@ -71,7 +71,7 @@
                     <i class="far fa-folder-open"></i> Open Project
                 </a>
                 <a href="#" id="openLast" class="list-group-item list-group-item-action disabled">
-                    <i class="fas fa-history"></i> Open last <small>Test</small>
+                    <i class="fas fa-history"></i> Open last <small id="open_last_text"></small>
                 </a>
             </div>
         </div>
@@ -83,7 +83,13 @@
     </div>
 
 </div>
+<script>if (typeof module === 'object') {
+    window.module = module;
+    module = undefined;
+}</script>
 <script src="js/loader_main.js"></script>
+<script src="js/jquery.js"></script>
+<script>if (window.module) module = window.module;</script>
 <script>
 
 
@@ -92,6 +98,7 @@
         const {BrowserWindow} = require('electron').remote
 
         function init() {
+            searchForLastPrj();
             document.getElementById("min-btn").addEventListener("click", function (e) {
                 var window = BrowserWindow.getFocusedWindow();
                 window.minimize();

@@ -10,7 +10,8 @@
     "dist-mac": "build --mac",
     "dist-linux": "build --linux"
   },
-  "repository": "https://brokenbeast.com/dsautilities",
+  "repository": "https://github.com/ItsCoding/DSAUtilities",
+  "homepage": "https://github.com/ItsCoding/DSAUtilities",
   "keywords": [
     "DSA5",
     "DSA",
@@ -18,8 +19,8 @@
     "digital",
     "rpg"
   ],
-  "author": "Brokenbeast.com",
-  "license": "Free4Use",
+  "author": "Alexander Quadtr <10713197+ItsCoding@users.noreply.github.com> https://github.com/ItsCoding",
+  "license": "Mozilla Public License 2.0",
   "devDependencies": {
     "electron": "^3.0.3",
     "electron-builder": "^20.39.0",

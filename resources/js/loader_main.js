@@ -1,4 +1,5 @@
 const {ipcRenderer} = require('electron');
+const path = require('path');
 var app = require('electron').remote;
 var dialog = app.dialog;
 var fs = require('fs');
@@ -30,9 +31,22 @@ function openprj() {
 }
 
 function searchForLastPrj(){
+    console.log("Found lastCFG: " + config.get("lastOpendPrj"))
     if(config.get("lastOpendPrj") !== null){
-        $('#openLast').removeClass("disabled");
+        $('#openLast').removeClass("disabled")
+        $("#open_last_text").html(path.basename(config.get("lastOpendPrj")))
+        $('#openLast').attr('onClick', 'openlastPrj();');
     }
+}
+
+function openlastPrj(){
+    var data = fs.readFile(config.get("lastOpendPrj"), (err, data) => {
+        if (err) throw err;
+        var obj = JSON.parse(data);
+        ipcRenderer.send('global', {method: 1, prop: "prj", value: obj});
+        ipcRenderer.send('maxi_main', {});
+        window.location.href = "index.html";
+    });
 }
 
 function newProjekt() {
