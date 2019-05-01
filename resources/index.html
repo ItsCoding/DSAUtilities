@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>DSA Utilities</title>
+    <link rel="stylesheet" href="css/spectrum.css">
+    <link rel="stylesheet" href="css/bootswatch.css">
+    <link rel="stylesheet" href="css/bootstrap-select.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/dsaicon.ico">
+    <link rel="stylesheet" href="css/fontawsome/all.css">
+    <style>
+
+
+        #screen {
+            height: 100%;
+            width: 100%;
+        }
+
+        #menubar {
+            height: 80px;
+            width: 100%;
+            background-color: #222222;
+            -webkit-app-region: drag;
+            -webkit-user-select: none;
+        }
+
+        .mac-btn {
+            top: 5px;
+            position: absolute;
+            height: 9px;
+            width: 9px;
+            border-radius: 50%;
+            margin-top: 15.5px;
+            -webkit-app-region: no-drag;
+        }
+
+        .mac-btn-one {
+            background-color: #FC6767;
+            right: 15.5px;
+        }
+
+        .mac-btn-two {
+            background-color: #FDD973;
+            right: 31px;
+        }
+
+        .mac-btn-three {
+            background-color: #B3E07A;
+            right: 47px;
+        }
+    </style>
+</head>
+<body style="overflow-x: hidden;margin: 0px;">
+
+<div id="screen">
+    <div id="menubar"></div>
+    <div id="keys">
+        <div class="mac-btn mac-btn-one" id="close-btn"></div>
+        <div class="mac-btn mac-btn-two" id="min-btn"></div>
+        <div class="mac-btn mac-btn-three" id="max-btn"></div>
+        <p style=" position: absolute; top:17px; left:10px; font-size: 1.171875rem;" href="" style="color: #ffffff !important;">DSAUtilities</p>
+        <div style=" position: absolute; top:13px; left:150px;" class="btn-group" role="group">
+            <div class="dropdown show" style=" -webkit-app-region: no-drag;">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Menu
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="">
+
+                    <a class="dropdown-item" href="#" onClick="newProjekt()">New projekt</a>
+                    <a class="dropdown-item" href="#" onClick="openprj()">Open projekt</a>
+                    <a class="dropdown-item" href="#" onClick="saveprj()">Save projekt</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#" onClick="window.close()">Exit</a>
+                </div>
+            </div>
+            <div style="margin-left: 5px;"></div>
+            <div style="margin-left: 5px;"></div>
+            <div class="dropdown show" style=" -webkit-app-region: no-drag;">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownViewLink"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Window
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownViewLink" style="">
+                    <a class="dropdown-item" href="#" onClick="$('#frame_main').show();$('#frame_settings').hide();">Main</a>
+                    <a class="dropdown-item" href="#" onClick="$('#frame_main').hide();$('#frame_settings').show();">Settings</a>
+                    <a class="dropdown-item" href="#"
+                       onClick="window.open('editor/index.html', 'DSA Utilites | Studio',['height='+screen.height,'width='+screen.width].join(','))">Project
+                        Editor</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="app-window">
+
+        <div id="frame_main">
+
+            <div class="row">
+                <div class="col-9" id="draw-frame">
+                    <div id="canvasDiv" class="embed-responsive embed-responsive-16by9">
+                        <div id="main_canvas_bg" style="z-index: -11;position: absolute; height: 100%;width: 100%;top: 0px;"></div>
+                        <div id="main_canvas_grid" style="z-index: -10; position: absolute; height: 100%;width: 100%;top: 0px;"></div>
+                        <canvas onClick="  $('.selected').each(function () {
+                                $(this).removeClass('selected');
+                            });" id="main_canvas" class="drawCanavs" width="" height="auto" style="z-index: 0"></canvas>
+                    </div>
+
+                </div>
+                <div class="col-3" id="sidemenu">
+                    <br>
+                    <form class="navbar-form navbar-right form-inline" role="search">
+                       <p>
+                           Rule Search
+                       </p>
+                        <select data-size="10" data-width="auto" data-live-search="true" data-style="btn-primary" id="dsa_searchbar">
+
+                        </select>
+                    </form>
+                    <br>
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#files"><i class="fas fa-folder-open"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#backs"><i class="fas fa-tv"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#notes"><i class="fas fa-sticky-note"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#pages"><i class="fas fa-file"></i></a>
+                        </li>
+                    </ul>
+                    <br>
+                    <div id="sideTabPages" class="tab-content">
+                        <div class="tab-pane fade active show" id="files">
+                            <h5>Icons</h5>
+                            <hr>
+                            <div id="file_drag">
+                                <div class="list-group " id="fb_data" style=" overflow-y: auto;max-height: 60vh;"></div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fad" id="pages">
+                            <h5>Pages</h5>
+                            <hr>
+                            <div class="form-group">
+                                <label class="control-label">Page Name</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="pages_pageName" aria-label="Name...">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">Add...
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#" onClick="addNewPage()">Add</a>
+                                            <a class="dropdown-item" href="#" onClick="addNewBackgroundFromCanvas()">Add as Background</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th scope="">Name</th>
+                                    <th scope=""></th>
+                                </tr>
+                                </thead>
+                                <tbody id="pages_table">
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane fade" id="backs">
+                            <h5>Backgrounds</h5>
+                            <hr>
+
+                            <div class="form-group">
+                                <label class="control-label">Direct URL</label>
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" id="bg_directURL" aria-label="URL...">
+                                        <div class="input-group-append">
+                                            <a class="input-group-text btn" onClick="setCanvasBackground($('#bg_directURL').val())">Load</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="">
+                                <div class="list-group " id="bg_data" style="  overflow-y: auto;max-height: 60vh;"></div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="notes">
+                            <h5>Notes</h5>
+                            <hr>
+                            <textarea class="form-control makeDark" rows="20" id="noteBox"></textarea>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <footer class="footer">
+                <div class="container">
+                    <div class="d-flex justify-content-center" style="padding-top: 10px">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary" onClick="switchDrawMode('pen'); "><i
+                                    class="fas fa-pen"></i>
+                            </button>
+                            <div class="btn-group" role="group">
+                                <button id="colorSetting" type="button" class="btn btn-primary dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                <div class="dropdown-menu" aria-labelledby="colorSetting" x-placement="bottom-start"
+                                     style="position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                    <a class="dropdown-item" href="#"
+                                       onClick="drawColor='black'; switchDrawMode('pen');">Schwarz</a>
+                                    <a class="dropdown-item" href="#" onClick="drawColor='blue'; switchDrawMode('pen');">Blau</a>
+                                    <a class="dropdown-item" href="#" onClick="drawColor='red'; switchDrawMode('pen')">Rot</a>
+                                    <a class="dropdown-item" href="#" onClick="drawColor='green'; switchDrawMode('pen');">Grün</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-left: 5px;"></div>
+                        <input class="btn btn-primary" type='text' id="colorPicker"/>
+                        <div style="margin-left: 5px;"></div>
+                        <button type="button" class="btn btn-primary" onClick="switchDrawMode('eraser');"><i
+                                class="fas fa-eraser"></i>
+                        </button>
+                        <div style="margin-left: 5px;"></div>
+                        <div style="margin-left: 5px;"></div>
+                        <div style="margin-left: 5px;"></div>
+                        <button type="button" class="btn btn-primary"
+                                onClick="lineWidth -= 1;$('#size_label').text(lineWidth);"><i class="fas fa-minus"></i>
+                        </button>
+                        <div style="margin-left: 5px;"></div>
+                        <span class="badge badge-primary"><h5 id="size_label">2</h5></span>
+                        <div style="margin-left: 5px;"></div>
+                        <button type="button" class="btn btn-primary"
+                                onClick="lineWidth += 1;$('#size_label').text(lineWidth);"><i class="fas fa-plus"></i>
+                        </button>
+                        <div style="margin-left: 5px;"></div>
+                        <div style="margin-left: 5px;"></div>
+                        <div style="margin-left: 5px;"></div>
+                        <button type="button" class="btn btn-primary"
+                                onClick="cleanCanvas()"><i class="fas fa-trash-alt"></i>
+                        </button>
+                        <div style="margin-left: 5px;"></div>
+                        <div style="margin-left: 5px;"></div>
+                        <div style="margin-left: 5px;"></div>
+                        <button type="button" class="btn btn-primary"
+                                onClick="togglePointer();$(this).toggleClass('btn-outline-primary')"><i class="fas fa-map-marker-alt"></i>
+                        </button>
+                        <div class="d-flex justify-content-end" style="left: 69%; position: absolute">
+                            <div style="margin-left: 5px;"></div>
+                            <button type="button" id="btn_quick_settings" class="btn btn-primary" style="width: 80px;"
+                                    onClick="$('#quick_health').hide('slow');$('#quick_settings').toggle('slow');$(this).toggleClass('btn-outline-primary');$('#btn_quick_health').removeClass('btn-outline-primary')">
+                                <i class="fas fa-sliders-h"></i>
+                            </button>
+                            <div style="margin-left: 5px;"></div>
+                            <button type="button" id="btn_quick_health" class="btn btn-primary" style="width: 80px;"
+                                    onClick="$('#quick_settings').hide('slow');$('#quick_health').toggle('slow');$(this).toggleClass('btn-outline-primary');$('#btn_quick_settings').removeClass('btn-outline-primary')">
+                                <i class="fas fa-medkit"></i>
+                            </button>
+                            <div style="margin-left: 5px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <p id="debug_percentage"></p>
+        </div>
+
+        <!-- Not in use actually -->
+        <div id="frame_settings" style="display: none" style="overflow: auto;">
+            </br>
+            <div class="container">
+                <div class="card text-white bg-secondary">
+                    <div class="card-header">Draw Settings</div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Background Zoom</label>
+                            <div class="slidecontainer">
+                                <input type="range" min="100" max="200" value="100" class="slider" id="quick_set_zoom_slide">
+                            </div>
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" onClick='
+                            var ck = this.checked;
+                            if(ck){
+                                debugMode = true
+                            }else{
+                                debugMode = false
+                            }
+
+
+                        ' id="debugMode_checkbox">
+                            <label class="form-check-label">Debugmode</label>
+                            <small>Enabled mouse draw</small>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="card text-white bg-secondary">
+                    <div class="card-header">Core Settings</div>
+                    <div class="container">
+                        <div class="form-group">
+                            <label class="col-form-label col-form-label-lg">Select Monitor</label>
+                            <select class="custom-select" id="settings_displaySelect">
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="icon_set_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Icon Settings</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" onClick='
+                            var ck = this.checked;
+                            if(ck){
+                                $("#" + lastFocused).attr("data-enablelf","true");
+                                $("#" + lastFocused + "-table-row").show();
+                            }else{
+                                $("#" + lastFocused).attr("data-enablelf","false");
+                                $("#" + lastFocused + "-table-row").hide();
+                            }
+
+
+                        ' id="npc_checkbox">
+                                <label class="form-check-label">NPC</label>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" class="form-control" id="icon_set_name"
+                                       onkeypress="changeIconName(lastFocused,$(this).val());">
+                            </div>
+                            <label>Leben:
+                                <small id="dmg_akt"></small>
+                            </label>
+
+                            <div class="row">
+                                <div class="col-4"><input type="number" class="form-control" id="dmg_val"></div>
+                                <div class="col-8">
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-secondary"
+                                                onClick="$('#' + lastFocused).attr('data-life',parseInt($('#dmg_val').val()));
+                                        $('#' + lastFocused).attr('data-maxlf',parseInt($('#dmg_val').val()));
+                                        changeProgressBar(lastFocused,parseInt($('#dmg_val').val()));
+                                        " data-dismiss="modal">Set Health
+                                        </button>
+                                        <button type="button" class="btn btn-danger"
+                                                onClick="$('#' + lastFocused).attr('data-life',parseInt($('#dmg_akt').text()) - parseInt($('#dmg_val').val()));
+                                        changeProgressBar(lastFocused,parseInt($('#' + lastFocused).attr('data-life')));
+                                        " data-dismiss="modal">Damge
+                                        </button>
+                                        <button type="button" class="btn btn-success"
+                                                onClick="$('#' + lastFocused).attr('data-life',parseInt($('#dmg_akt').text()) + parseInt($('#dmg_val').val()));
+                                        changeProgressBar(lastFocused,parseInt($('#' + lastFocused).attr('data-life')));
+                                        " data-dismiss="modal">Heal
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- <p>Size X : <small id="sizeX_res"></small></p>
+                        <div class="slidecontainer">
+                            <input type="range" min="0" max="800" value="500" class="slider" id="set_res_slide_x" onChange="">
+                        </div>
+                        <p>Size Y : <small id="sizeY_res"></small></p>
+                        <div class="slidecontainer">
+                            <input type="range" min="0" max="800" value="500" class="slider" id="set_res_slide_y" onChange="">
+                        </div> -->
+                        <div class="btn-group d-flex justify-content-center" role="group" aria-label="">
+                            <button type="button" class="btn btn-danger"
+                                    onClick="$('#' + lastFocused).remove(); bcChannel.postMessage({type: 'deleteIcon',id: lastFocused});$('#' + lastFocused + '-table-row').remove();"
+                                    data-dismiss="modal">Delete
+                            </button>
+                            <button type="button" class="btn btn-primary"
+                                    onClick="$('#' + lastFocused + '-img').height($('#' + lastFocused + '-img').height() + 20); $('#' + lastFocused + '-img').width($('#' + lastFocused + '-img').width() + 20);bcChannel.postMessage({type: 'changeSize',id: lastFocused,value: 20});"
+                            >+ Size
+                            </button>
+                            <button type="button" class="btn btn-primary"
+                                    onClick="$('#' + lastFocused + '-img').height($('#' + lastFocused + '-img').height() - 20); $('#' + lastFocused + '-img').width($('#' + lastFocused + '-img').width() - 20);bcChannel.postMessage({type: 'changeSize',id: lastFocused,value: -20});"
+                            >- Size
+                            </button>
+                            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick="$('#' + lastFocused).width(document.getElementById('set_res_slide_x').value);$('#' + lastFocused).height(document.getElementById('set_res_slide_y').value);">Resize</button>
+                        --></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade " id="ruleModal" tabindex="-1" role="dialog" aria-labelledby="ruleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ruleModalLabel">DSA Rule</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="rule_content">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="quick_settings" style="display:none; position: absolute;width: 30%;left:69%;bottom: 7%;">
+
+            <div class="card border-secondary">
+                <div class="card-header">Settings</div>
+                <div class="card-body">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="gset_grid" checked onChange="toggleGrid();">
+                        <label class="form-check-label">Show grid</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="gset_pause" onChange="togglePauseMode();">
+                        <label class="form-check-label">Pause presentation</label>
+                    </div>
+                    <br/>
+                    <div class="form-group">
+                        <label>Background Zoom</label>
+                        <div class="slidecontainer">
+                            <input type="range" min="100" max="1000" value="100" class="slider" id="set_zoom_slide">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Background-offset X</label>
+                        <div class="slidecontainer">
+                            <input type="range" min="0" max="100" value="0" class="slider" id="set_bg_offx"
+                                   onChange="$('#main_canvas_bg').css('background-position-x', document.getElementById('set_bg_offx').value +'%'); bcChannel.postMessage({type: 'bgOffset-x',value: document.getElementById('set_bg_offx').value});">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Background-offset Y</label>
+                        <div class="slidecontainer">
+                            <input type="range" min="0" max="100" value="0" class="slider" id="set_bg_offy"
+                                   onChange="$('#main_canvas_bg').css('background-position-y', document.getElementById('set_bg_offy').value +'%'); bcChannel.postMessage({type: 'bgOffset-y',value: document.getElementById('set_bg_offy').value});">
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="form-group">
+                        <label>Grid Zoom</label>
+                        <div class="slidecontainer">
+                            <input type="range" min="10" max="400" value="100" class="slider" id="set_zoom_slide_grid">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Grid-offset X</label>
+                        <div class="slidecontainer">
+                            <input type="range" min="0" max="100" value="0" class="slider" id="set_grid_offx"
+                                   onChange="$('#main_canvas_grid').css('background-position-x', document.getElementById('set_grid_offx').value +'%'); bcChannel.postMessage({type: 'gridOffset-x',value: document.getElementById('set_grid_offx').value});">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Grid-offset Y</label>
+                        <div class="slidecontainer">
+                            <input type="range" min="0" max="100" value="0" class="slider" id="set_grid_offy"
+                                   onChange="$('#main_canvas_grid').css('background-position-y', document.getElementById('set_grid_offy').value +'%'); bcChannel.postMessage({type: 'gridOffset-y',value: document.getElementById('set_grid_offy').value});">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="quick_health" style="display:none; position: absolute;width: 30%;left:69%;bottom: 7%; max-height: 80%;overflow-y: scroll">
+            <div class="card border-secondary">
+                <div class="card-header">Health</div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="">Dice</th>
+                            <th scope="col">Health</th>
+                        </tr>
+                        </thead>
+                        <tbody id="health_menu">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="contextMenu" class="dropdown-menu">
+            <a class="dropdown-item" href="#"><i class="fas fa-folder-open"></i> Neuer Ordner</a>
+            <a class="dropdown-item" href="#"><i class="fas fa-file"></i> Neue Datei</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#"><i class="fas fa-trash-alt"></i> Löschen</a>
+        </div>
+
+
+
+    </div>
+</div>
+
+<script>
+
+    (function () {
+
+        const { BrowserWindow } = require('electron').remote
+
+        function init() {
+            document.getElementById("min-btn").addEventListener("click", function (e) {
+                var window = BrowserWindow.getFocusedWindow();
+                window.minimize();
+            });
+
+            document.getElementById("max-btn").addEventListener("click", function (e) {
+                var window = BrowserWindow.getFocusedWindow();
+                window.maximize();
+            });
+
+            document.getElementById("close-btn").addEventListener("click", function (e) {
+                var window = BrowserWindow.getFocusedWindow();
+                window.close();
+            });
+        };
+
+        document.onreadystatechange = function () {
+            if (document.readyState == "complete") {
+                init();
+            }
+        };
+
+    })();
+
+</script>
+
+<script>if (typeof module === 'object') {
+    window.module = module;
+    module = undefined;
+}</script>
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+<script
+        src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+        crossorigin="anonymous"></script>
+<script src="js/jquery-move.js"></script>
+<script src="js/loadingoverlay.js"></script>
+<script src="js/bootstrap-select.js"></script>
+<script src="js/bootstrap-notify.js"></script>
+<script src="js/zoom.js"></script>
+<script src="js/html2canvas.js"></script>
+<script src="js/base64.js"></script>
+<script src="js/spectrum.js"></script>
+<script src="draw.js"></script>
+<script src="js/fileBrowser.js"></script>
+<script src="core.js"></script>
+<script>
+    $(document).ready(function () {
+        $.LoadingOverlay("show", {
+            text: "DSAUtilities: Loading projekt",
+            progress: true
+        });
+        setTimeout(initDSACore, 500);
+    });
+    $("#colorPicker").spectrum({
+        allowEmpty: true,
+        showInput: true,
+        change: function (color) {
+            switchDrawMode('pen');
+            drawColor = color.toRgbString();
+        },
+        containerClassName: "full-spectrum",
+        showInitial: true,
+        showPalette: true,
+        showSelectionPalette: true,
+        showAlpha: true,
+        maxPaletteSize: 10,
+        preferredFormat: "hex",
+        localStorageKey: "spectrum.demo",
+
+        palette: [
+            ["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)", /*"rgb(153, 153, 153)","rgb(183, 183, 183)",*/
+                "rgb(204, 204, 204)", "rgb(217, 217, 217)", /*"rgb(239, 239, 239)", "rgb(243, 243, 243)",*/ "rgb(255, 255, 255)"],
+            ["rgb(152, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 153, 0)", "rgb(255, 255, 0)", "rgb(0, 255, 0)",
+                "rgb(0, 255, 255)", "rgb(74, 134, 232)", "rgb(0, 0, 255)", "rgb(153, 0, 255)", "rgb(255, 0, 255)"],
+            ["rgb(230, 184, 175)", "rgb(244, 204, 204)", "rgb(252, 229, 205)", "rgb(255, 242, 204)", "rgb(217, 234, 211)",
+                "rgb(208, 224, 227)", "rgb(201, 218, 248)", "rgb(207, 226, 243)", "rgb(217, 210, 233)", "rgb(234, 209, 220)",
+                "rgb(221, 126, 107)", "rgb(234, 153, 153)", "rgb(249, 203, 156)", "rgb(255, 229, 153)", "rgb(182, 215, 168)",
+                "rgb(162, 196, 201)", "rgb(164, 194, 244)", "rgb(159, 197, 232)", "rgb(180, 167, 214)", "rgb(213, 166, 189)",
+                "rgb(204, 65, 37)", "rgb(224, 102, 102)", "rgb(246, 178, 107)", "rgb(255, 217, 102)", "rgb(147, 196, 125)",
+                "rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)", "rgb(194, 123, 160)",
+                "rgb(166, 28, 0)", "rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
+                "rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)", "rgb(166, 77, 121)",
+                /*"rgb(133, 32, 12)", "rgb(153, 0, 0)", "rgb(180, 95, 6)", "rgb(191, 144, 0)", "rgb(56, 118, 29)",
+                "rgb(19, 79, 92)", "rgb(17, 85, 204)", "rgb(11, 83, 148)", "rgb(53, 28, 117)", "rgb(116, 27, 71)",*/
+                "rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)",
+                "rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
+        ]
+    });
+
+
+</script>
+<script>if (window.module) module = window.module;</script>
+<script>
+    require('./renderer.js');
+</script>
+</body>
+

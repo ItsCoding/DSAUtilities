@@ -1,0 +1,122 @@
+<head>
+    <style class="cp-pen-styles">
+        body {
+            background-image: url("Background/bg_init.jpg");
+            background-position: center;
+            background-size: cover;
+            margin: 0px;
+        }
+
+        #screen {
+
+            height: 100%;
+            width: 100%;
+        }
+
+        #menubar {
+            height: 40px;
+            width: 100%;
+            -webkit-app-region: drag;
+            -webkit-user-select: none;
+        }
+
+        .mac-btn {
+            top: 5px;
+            position: absolute;
+            height: 9px;
+            width: 9px;
+            border-radius: 50%;
+            margin-top: 15.5px;
+            -webkit-app-region: no-drag;
+        }
+
+        .mac-btn-one {
+            background-color: #FC6767;
+            right: 15.5px;
+        }
+
+        .mac-btn-two {
+            background-color: #FDD973;
+            right: 31px;
+        }
+
+        .mac-btn-three {
+            background-color: #B3E07A;
+            right: 47px;
+        }
+    </style>
+    <link rel="stylesheet" href="css/bootswatch.css">
+    <link rel="stylesheet" href="css/fontawsome/all.css">
+</head>
+<body>
+
+<div id="screen">
+    <div id="menubar"></div>
+    <div id="keys">
+        <div class="mac-btn mac-btn-one" id="close-btn"></div>
+        <div class="mac-btn mac-btn-two" id="min-btn"></div>
+        <div class="mac-btn mac-btn-three" id="max-btn"></div>
+    </div>
+
+    <h2 style="text-align: center">DSAUtilities</h2>
+    <span class="align-middle">
+        <div class="d-flex justify-content-center" id="open_menu">
+
+        <div class="p-4">
+            <div class="list-group" style="width: 300px">
+                <a href="#" class="list-group-item list-group-item-action active"  onClick="newProjekt();">
+                    <i class="far fa-file"></i> New Project
+                </a>
+                <a href="#" class="list-group-item list-group-item-action" onClick="openprj();">
+                    <i class="far fa-folder-open"></i> Open Project
+                </a>
+                <a href="#" id="openLast" class="list-group-item list-group-item-action disabled">
+                    <i class="fas fa-history"></i> Open last <small>Test</small>
+                </a>
+            </div>
+        </div>
+    </div>
+    </span>
+
+    <div id="loading_div">
+
+    </div>
+
+</div>
+<script src="js/loader_main.js"></script>
+<script>
+
+
+    (function () {
+
+        const {BrowserWindow} = require('electron').remote
+
+        function init() {
+            document.getElementById("min-btn").addEventListener("click", function (e) {
+                var window = BrowserWindow.getFocusedWindow();
+                window.minimize();
+            });
+
+            document.getElementById("max-btn").addEventListener("click", function (e) {
+                var window = BrowserWindow.getFocusedWindow();
+                window.maximize();
+            });
+
+            document.getElementById("close-btn").addEventListener("click", function (e) {
+                var window = BrowserWindow.getFocusedWindow();
+                window.close();
+            });
+        };
+
+        document.onreadystatechange = function () {
+            if (document.readyState == "complete") {
+                init();
+            }
+        };
+
+    })();
+
+</script>
+
+</body>
+

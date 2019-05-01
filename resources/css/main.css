@@ -1,0 +1,134 @@
+body {
+    overflow: hidden;
+    margin-bottom: 60px; /* Margin bottom by footer height */
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px; /* Set the fixed height of the footer here */
+    line-height: 60px; /* Vertically center the text there */
+    background-color: rgba(48, 48, 48, 0.5);
+}
+
+.drawCanavs {
+    background-size: 100%;
+    position: fixed;
+
+    touch-action: none;
+}
+
+.slidecontainer {
+    width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #00bc8c;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #00bc8c;
+    cursor: pointer;
+}
+
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #00bc8c;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #00bc8c;
+    cursor: pointer;
+}
+
+.sdb::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #00bc8c;
+    cursor: pointer;
+}
+
+.sdb::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #00bc8c;
+    cursor: pointer;
+}
+.roundImg {
+    height: 32px;
+    width: 32px;
+    margin-right: 15px;
+    border-radius: 8px;
+}
+
+.iconDrag{
+    position:absolute;
+    z-index: 10;
+    left: 30px;
+    top: 400px;
+}
+
+.iconDrag:hover {
+    cursor: pointer;
+}
+
+.iconDot {
+    text-align: center;
+    !important border-radius: 50%;
+    display: inline-grid;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.iconDrag.selected {
+       box-shadow: 0 0 5px 5px red;
+	   border-radius: 50%;
+}
+
+.makeDark {
+    background-color: #222 !important;
+    color: #FFFFFF !important;
+    border-color: #FFFFFF;
+}
+
+.ulTable {
+    width: 100%;
+    white-space: nowrap;
+    text-align: center;
+    color: black !important;
+}
