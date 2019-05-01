@@ -2,9 +2,9 @@
 
 DSAUtilities is a pen&paper toolbox if u have an big screen instead of an old whiteboard.  
 It is made to assist the GM (Gamemaster) while he can concentrate on storytelling.  
-At the moment this is optimized for DSA(german: Das schwarze Auge, english:The Dark Eye) but this is only related to the rule search.
+At the moment this is optimized for DSA (german: Das schwarze Auge, english:The Dark Eye) but this is only related to the rule search.
 
-#### Funktions:
+#### Functions:
  * Digital whiteboard , draw with mouse or OS compatible drawpads such as Wacom Bamboo  
  * Icon Editor , create your own Icons in the Studio
  * Healthmanagment , dont write npc liefs on paper and waste lovely Trees
