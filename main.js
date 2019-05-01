@@ -36,7 +36,10 @@ function createWindow() {
     } else {
         myConsole.log("Main.js ==> No Display config found: Setup");
         externalDisplay = displays.find((display) => {
-            fullscreen = true;
+            if(display.bounds.x !== 0 && display.bounds.y !== 0){
+              fullscreen = true;
+              myConsole.log("Display Found: "  + display.bounds.x)
+            }
             return display.bounds.x !== 0 && display.bounds.y !== 0
         })
         config.set("screen_fullscreen", fullscreen);
@@ -94,7 +97,7 @@ function createWindow() {
             globals: {id: 2},
             fullscreen: fullscreen
         })
-        console.myConsole("Main.js ==> No Fullscreen Parameter , maybe there is no second monitor")
+        myConsole.log("Main.js ==> No Fullscreen Parameter , maybe there is no second monitor")
     }
     presentationWindow.maximize()
     presentationWindow.setMenu(null)
