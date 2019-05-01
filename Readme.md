@@ -4,7 +4,7 @@ DSAUtilities is a pen&paper toolbox if u have an big screen instead of an old wh
 It is made to assist the GM (Gamemaster) while he can concentrate on storytelling.  
 At the moment this is optimized for DSA(german: Das schwarze Auge, english:The Dark Eye) but this is only related to the rule search.
 
-Funktions:
+#### Funktions:
  * Digital whiteboard , draw with mouse or OS compatible drawpads such as Wacom Bamboo  
  * Icon Editor , create your own Icons in the Studio
  * Healthmanagment , dont write npc liefs on paper and waste lovely Trees
@@ -14,6 +14,12 @@ Funktions:
  * Take notes in the notebox , and never use paper again
  * Safe your creation as a , developer friendly, JSON single file
  * And many more...
+
+#### How to start:
+To run DSAUtilities you need NPM wich comes with Node.js  
+
+`npm install && nmp start`
+
 
 
 
