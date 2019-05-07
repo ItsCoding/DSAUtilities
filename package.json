@@ -1,6 +1,6 @@
 {
   "name": "DSAUtilities",
-  "version": "0.9.0",
+  "version": "1.0.1",
   "description": "An RPG digital whiteboard",
   "main": "main.js",
   "scripts": {
