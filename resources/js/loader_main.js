@@ -56,3 +56,31 @@ function newProjekt() {
     ipcRenderer.send('maxi_main', {});
     window.location.href = "index.html";
 }
+
+function initIPC(){
+   ipcRenderer.on("updater",(event,args) => {
+       if(args.case == "check"){
+           if(args.update_available == true){
+               console.log(args);
+               $('#update_vers').html(args.info.version);
+               $('#update_notes').html(args.info.releaseNotes);
+               $('#updater').hide();
+               $('#update-avail').show();
+           }else{
+               $('#updater').hide();
+               $('#menu').show();
+           }
+       }else if(args.case == "progress"){
+           var obj = args.obj;
+           $('#dl_pr').text((Math.round(obj.percent * 100) / 100) + "%").width(obj.percent + "%");
+           $('#dl_speed').text((obj.bytesPerSecond / 1e+6) + "MB/s");
+           $('#dl_total').text((obj.transferred / 1e+6) + "/" + (obj.total / 1e+6) + "MB");
+       }
+   })
+}
+
+function callForUpdate(){
+    ipcRenderer.send('update', {});
+    $('#update-avail').hide();
+    $('#update-dl').show();
+}

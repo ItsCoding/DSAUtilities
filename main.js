@@ -5,6 +5,7 @@ const {app, BrowserWindow, ipcMain} = require('electron');
 const electron = require('electron');
 const Config = require('electron-config');
 const config = new Config();
+const {autoUpdater} = require("electron-updater");
 var nodeConsole = require('console');
 var myConsole = new nodeConsole.Console(process.stdout, process.stderr);
 var projectJson = {}
@@ -24,6 +25,13 @@ function getStorrageNode(node) {
 }
 
 function createWindow() {
+    autoUpdater.autoDownload = false
+    const data = {
+        'provider': 'github',
+        'owner':    'ItsCoding',
+        'repo':     'DSAUtilities'
+    };
+    autoUpdater.setFeedURL(data);
     let displays = electron.screen.getAllDisplays()
     var fullscreen = false;
     let externalDisplay = null;
@@ -36,9 +44,9 @@ function createWindow() {
     } else {
         myConsole.log("Main.js ==> No Display config found: Setup");
         externalDisplay = displays.find((display) => {
-            if(display.bounds.x !== 0 && display.bounds.y !== 0){
-              fullscreen = true;
-              myConsole.log("Display Found: "  + display.bounds.x)
+            if (display.bounds.x !== 0 && display.bounds.y !== 0) {
+                fullscreen = true;
+                myConsole.log("Display Found: " + display.bounds.x)
             }
             return display.bounds.x !== 0 && display.bounds.y !== 0
         })
@@ -55,6 +63,39 @@ function createWindow() {
         mainWindow.setResizable(true)
         mainWindow.maximize();
     });
+
+    ipcMain.on("update", (event, args) => {
+        autoUpdater.downloadUpdate();
+    });
+
+    autoUpdater.on('checking-for-update', () => {
+        myConsole.log('Updater => Checking for update...');
+    });
+
+    autoUpdater.on('update-available', (info) => {
+        mainWindow.webContents.send('updater', {case: "check", update_available: true,info: info});
+        myConsole.log(info);
+    });
+    autoUpdater.on('update-not-available', (info) => {
+        mainWindow.webContents.send('updater', {case: "check", update_available: false});
+    });
+    autoUpdater.on('error', (err) => {
+        mainWindow.webContents.send('updater', {case: "check", update_available: false});
+    });
+
+    autoUpdater.on('download-progress', (progressObj) => {
+        let log_message = "Download speed: " + progressObj.bytesPerSecond;
+        log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+        log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+        myConsole.log(log_message);
+        mainWindow.webContents.send('updater', {case: "progress", msg: log_message,obj: progressObj});
+    });
+
+    autoUpdater.on('update-downloaded', (info) => {
+        myConsole.log("Download completed")
+        //autoUpdater.quitAndInstall();
+    });
+
     ipcMain.on('global', (event, arg) => {
         /***
          *
@@ -73,12 +114,13 @@ function createWindow() {
         if (arg.method == 1) {
             myConsole.log("ÍPC <=STORE== " + sizeof(arg.value) + "B")
             global[arg.prop] = arg.value;
+            event.returnValue = true
         } else if (arg.method == 2) {
             myConsole.log("ÍPC ==GET=> " + sizeof(global[arg.prop]) + "B")
             event.returnValue = global[arg.prop]
         }
     })
-
+    fullscreen = false
     if (fullscreen) {
         presentationWindow = new BrowserWindow({
             width: 1920,
@@ -89,25 +131,35 @@ function createWindow() {
             fullscreen: fullscreen
         })
     } else {
-        presentationWindow = new BrowserWindow({
+        /**presentationWindow = new BrowserWindow({
             width: 1920,
             height: 1000,
             x: 0,
             y: 0,
             globals: {id: 2},
             fullscreen: fullscreen
-        })
+        }) **/
         myConsole.log("Main.js ==> No Fullscreen Parameter , maybe there is no second monitor")
     }
-    presentationWindow.maximize()
-    presentationWindow.setMenu(null)
-    presentationWindow.loadFile('resources/presentation/index.html')
-    presentationWindow.on('closed', function () {
-        presentationWindow = null
-    })
+
+    if(typeof presentationWindow != "undefined" ){
+        presentationWindow.maximize()
+        presentationWindow.setMenu(null)
+        presentationWindow.loadFile('resources/presentation/index.html')
+        presentationWindow.on('closed', function () {
+            presentationWindow = null
+        })
+    }
+
 
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 850, height: 300, globals: {id: 1}, frame: false})
+    mainWindow = new BrowserWindow({
+        width: 850,
+        height: 300,
+        globals: {id: 1},
+        frame: false,
+        webPreferences: {nodeIntegration: true, devTools: true, enableRemoteModule: true}
+    })
     //mainWindow.setMenu(null);
     mainWindow.loadFile('resources/loaderPres.html')
     mainWindow.setResizable(false)
@@ -117,6 +169,7 @@ function createWindow() {
         mainWindow = null
     })
     var end_inittime = performance.now();
+    autoUpdater.checkForUpdatesAndNotify();
     myConsole.log("Main.js ==> Init took: " + (end_inittime - start_inittime) + ' ms.')
 }
 

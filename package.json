@@ -1,14 +1,18 @@
 {
   "name": "DSAUtilities",
-  "version": "1.0.0",
+  "version": "0.9.0",
   "description": "An RPG digital whiteboard",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "pack": "build --dir",
-    "dist": "build",
+    "dist-win": "build --win",
+    "dist-win-portable": "build --win --dir",
     "dist-mac": "build --mac",
-    "dist-linux": "build --linux"
+    "dist-linux": "build --linux",
+    "dist-arm": "build --arm64",
+    "dist-all-w": "npm run dist-win && npm run dist-win-portable ",
+    "dist-all-l": "npm run dist-linux && npm run dist-arm"
   },
   "repository": "https://github.com/ItsCoding/DSAUtilities",
   "homepage": "https://github.com/ItsCoding/DSAUtilities",
@@ -19,16 +23,17 @@
     "digital",
     "rpg"
   ],
-  "author": "Alexander Quadtr <10713197+ItsCoding@users.noreply.github.com> https://github.com/ItsCoding",
-  "license": "Mozilla Public License 2.0",
+  "author": "Alexander Quadt <10713197+ItsCoding@users.noreply.github.com> https://github.com/ItsCoding",
+  "license": "MPL-2.0",
   "devDependencies": {
-    "electron": "^3.0.3",
+    "electron": "^5.0.0",
     "electron-builder": "^20.39.0",
     "electron-winstaller": "^2.7.0"
   },
   "dependencies": {
     "electron-config": "^2.0.0",
     "electron-store": "^2.0.0",
+    "electron-updater": "^4.0.6",
     "merge-images": "^1.1.0",
     "object-sizeof": "^1.3.0"
   },
@@ -55,7 +60,10 @@
       ]
     },
     "win": {
-      "target": "NSIS",
+      "target": [
+        "NSIS",
+        "portable"
+      ],
       "icon": "resources/dsaicon.ico"
     }
   }

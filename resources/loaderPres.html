@@ -44,6 +44,73 @@
             background-color: #B3E07A;
             right: 47px;
         }
+
+        .lds-ellipsis {
+            display: inline-block;
+            position: relative;
+            top: 10%;
+            left: 47%;
+            width: 64px;
+            height: 64px;
+        }
+
+        .lds-ellipsis div {
+            position: absolute;
+            top: 27px;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: #fff;
+            animation-timing-function: cubic-bezier(0, 1, 1, 0);
+        }
+
+        .lds-ellipsis div:nth-child(1) {
+            left: 6px;
+            animation: lds-ellipsis1 0.6s infinite;
+        }
+
+        .lds-ellipsis div:nth-child(2) {
+            left: 6px;
+            animation: lds-ellipsis2 0.6s infinite;
+        }
+
+        .lds-ellipsis div:nth-child(3) {
+            left: 26px;
+            animation: lds-ellipsis2 0.6s infinite;
+        }
+
+        .lds-ellipsis div:nth-child(4) {
+            left: 45px;
+            animation: lds-ellipsis3 0.6s infinite;
+        }
+
+        @keyframes lds-ellipsis1 {
+            0% {
+                transform: scale(0);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes lds-ellipsis3 {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(0);
+            }
+        }
+
+        @keyframes lds-ellipsis2 {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(19px, 0);
+            }
+        }
+
     </style>
     <link rel="stylesheet" href="css/bootswatch.css">
     <link rel="stylesheet" href="css/fontawsome/all.css">
@@ -57,14 +124,45 @@
         <div class="mac-btn mac-btn-two" id="min-btn"></div>
         <div class="mac-btn mac-btn-three" id="max-btn"></div>
     </div>
-
-    <h2 style="text-align: center">DSAUtilities</h2>
-    <span class="align-middle">
+    <div id="updater">
+        <h2 style="text-align: center">Checking for Updates</h2>
+        <div class="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <div id="update-avail" style="display:none">
+        <h2 style="text-align: center">Update available</h2>
+        <div class="alert alert-dismissible alert-light container">
+            <div class="btn-group" role="group" style="position: absolute;right: 20px;">
+                <button type="button" class="btn btn-success btn-sm" onClick="callForUpdate()">Download</button>
+                <button type="button" class="btn btn-primary btn-sm" onClick="$('#update-avail').hide();$('#menu').show();">Cancle</button>
+            </div>
+            <p>New version : <strong id="update_vers"></strong></p>
+            <p><strong>Notes</strong></p>
+            <div class="container-fluid" id="update_notes"></div>
+        </div>
+    </div>
+    <div id="update-dl" style="display:none">
+        <h2 style="text-align: center">Downloading</h2>
+        <div class="alert alert-dismissible alert-light container">
+            <p>Speed: <strong id="dl_speed">0KB/s</strong></p>
+            <p>Downloaded: <strong id="dl_total">0MB</strong></p>
+            <div class="progress">
+                <div id="dl_pr" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+            </div>
+        </div>
+    </div>
+    <div id="menu" style="display:none">
+        <h2 style="text-align: center">DSAUtilities</h2>
+        <span class="align-middle">
         <div class="d-flex justify-content-center" id="open_menu">
 
         <div class="p-4">
             <div class="list-group" style="width: 300px">
-                <a href="#" class="list-group-item list-group-item-action active"  onClick="newProjekt();">
+                <a href="#" class="list-group-item list-group-item-action active" onClick="newProjekt();">
                     <i class="far fa-file"></i> New Project
                 </a>
                 <a href="#" class="list-group-item list-group-item-action" onClick="openprj();">
@@ -77,6 +175,8 @@
         </div>
     </div>
     </span>
+    </div>
+
 
     <div id="loading_div">
 
@@ -117,6 +217,7 @@
 
         document.onreadystatechange = function () {
             if (document.readyState == "complete") {
+                initIPC();
                 init();
             }
         };

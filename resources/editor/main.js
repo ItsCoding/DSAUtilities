@@ -8,10 +8,9 @@ const Store = require('electron-store');
 const store = new Store();
 const dialog = require('electron').remote.dialog;
 var fs = require('fs');
+const { ipcRenderer } = require('electron')
 
 
-fileJson = getStorrageNode('fileJson');
-backGroundJson = getStorrageNode('backGroundJson');
 
 
 function renderFileObj(data, deep = 0) {
@@ -104,11 +103,7 @@ function chooseFile(data, index) {
 
 
 function storeStorrageNode(node, st) {
-    store.set(node, st);
-}
-
-function getStorrageNode(node) {
-    return store.get(node);
+    ipcRenderer.send('global', {method:1,prop:node,value:st});
 }
 
 
@@ -369,13 +364,22 @@ document.getElementById("importBgBtn").addEventListener("click", function () {
     openBgFile();
 });
 
+function loadAllVariables() {
+    var obj = ipcRenderer.sendSync('global', {method:2,prop:"prj"});
+    console.log("IPC init Recieved");
+    fileJson = obj.fileJson;
+    backGroundJson = obj.backGroundJson;
+}
+
 function finishProjekt(){
-    storeStorrageNode("fileJson",fileJson);
-    storeStorrageNode("backGroundJson",backGroundJson);
+    ipcRenderer.sendSync('global',{method:1,prop:"prj",value:{fileJson: fileJson,backGroundJson: backGroundJson}})
     var bcChannel = new BroadcastChannel('bcDSA');
     bcChannel.postMessage({
         type: "core_reload"
     })
     window.close();
 }
+
+loadAllVariables();
+
 
