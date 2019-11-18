@@ -12,8 +12,9 @@ var canvaseURL = "";
 var gridOn = true;
 var pagesSafe = [];
 var loader_progress = 0;
-var noteBox = ""
-
+var noteBox = "";
+var quick_iconBase64 = "";
+var quick_iconCounter = 0;
 String.prototype.replaceAll = function (search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
@@ -135,7 +136,7 @@ async function initDSACore() {
 	
 	$('#quick_set_zoom_slide').change(function () {
 		console.log("BG Zoom called");
-        var val = document.getElementById("set_zoom_slide").value;
+        var val = document.getElementById("quick_set_zoom_slide").value;
         bcChannel.postMessage({type: "resizeBg", scale: val});
         $('#main_canvas_bg').css("background-size", val + "%");
         console.debug("Change Background Size to: " + val + "%");
@@ -163,6 +164,13 @@ async function initDSACore() {
         var val = document.getElementById("set_res_slide_x").value;
         $('#sizeX_res').text(val);
     });
+
+    //Sync BG Zoom
+    var val = document.getElementById("set_zoom_slide").value;
+    bcChannel.postMessage({type: "resizeBg", scale: val});
+    $('#main_canvas_bg').css("background-size", val + "%");
+
+
 
     actualSelectedJson = [fileJson];
     renderFileObj(-1);
@@ -277,6 +285,7 @@ function openprj() {
 function addNewPage() {
     var name = $('#pages_pageName').val();
     var obj = {name: name, image: document.getElementById("main_canvas").toDataURL(), canvasURL: canvaseURL};
+    if(pagesSafe == undefined) pagesSafe = [];
     pagesSafe.push(obj);
     storeStorrageNode("pagesSafe", pagesSafe);
     renderpagesSafe();
@@ -503,4 +512,51 @@ function toggleSideMenu(tgl) {
     }
     pixelScale.x = presSize.x / document.getElementById('canvasDiv').clientWidth;
     pixelScale.y = presSize.y / document.getElementById('canvasDiv').clientHeight;
+}
+
+function initShortcuts() {
+    
+
+}
+
+function quickImportImg(){
+    dialog.showOpenDialog({
+        filters: [
+            {name: 'Images', extensions: ['jpg', "png"]}
+        ]
+    }, function (fileNames) {
+
+        if (fileNames === undefined) return;
+
+        var fileName = fileNames[0];
+        let extensionName = path.extname(fileName);
+        var data = fs.readFileSync(fileName);
+        let base64Image = new Buffer.from(data, 'binary').toString('base64');
+        quick_iconBase64 = `data:image/${extensionName.split('.').pop()};base64,${base64Image}`;
+    });
+}
+
+function quickAddIcon(){
+   quick_iconCounter += 1;
+   var quickJson = JSON.parse('{"cssOnly":false,"fileProppertie":{"needBackground":false,"opacity":1,"rounded":true,"sizeX":"' + document.getElementById("quick_icsizex").value + '","sizeY":"' + document.getElementById("quick_icsizey").value + '"},"fileType":"icon","iconProps":{"life":"","name":"","npc":false,"speed":""},"name":"QuickIcon-' + quick_iconCounter + '","path":"' + quick_iconBase64 + '","prevPath":"' + quick_iconBase64 + '","preview":true,"type":"file"}');
+   fileJson.push(quickJson);
+   renderFileObj(-1);
+   renderIcon(quickJson);
+}
+
+function quickImportBackground(){
+    dialog.showOpenDialog({
+        filters: [
+            {name: 'Images', extensions: ['jpg', "png"]}
+        ]
+    }, function (fileNames) {
+
+        if (fileNames === undefined) return;
+
+        var fileName = fileNames[0];
+        let extensionName = path.extname(fileName);
+        var data = fs.readFileSync(fileName);
+        let base64Image = new Buffer.from(data, 'binary').toString('base64');
+        setCanvasBackground(`data:image/${extensionName.split('.').pop()};base64,${base64Image}`);
+    });
 }

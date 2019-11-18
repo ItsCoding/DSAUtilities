@@ -59,7 +59,8 @@
         <div class="mac-btn mac-btn-one" id="close-btn"></div>
         <div class="mac-btn mac-btn-two" id="min-btn"></div>
         <div class="mac-btn mac-btn-three" id="max-btn"></div>
-        <p style=" position: absolute; top:17px; left:10px; font-size: 1.171875rem;" href="" style="color: #ffffff !important;">DSAUtilities</p>
+        <p style=" position: absolute; top:17px; left:10px; font-size: 1.171875rem;" href=""
+           style="color: #ffffff !important;">DSAUtilities</p>
         <div style=" position: absolute; top:13px; left:150px;" class="btn-group" role="group">
             <div class="dropdown show" style=" -webkit-app-region: no-drag;">
                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
@@ -102,8 +103,10 @@
             <div class="row">
                 <div class="col-9" id="draw-frame">
                     <div id="canvasDiv" class="embed-responsive embed-responsive-16by9">
-                        <div id="main_canvas_bg" style="z-index: -11;position: absolute; height: 100%;width: 100%;top: 0px;"></div>
-                        <div id="main_canvas_grid" style="z-index: -10; position: absolute; height: 100%;width: 100%;top: 0px;"></div>
+                        <div id="main_canvas_bg"
+                             style="z-index: -11;position: absolute; height: 100%;width: 100%;top: 0px;"></div>
+                        <div id="main_canvas_grid"
+                             style="z-index: -10; position: absolute; height: 100%;width: 100%;top: 0px;"></div>
                         <canvas onClick="  $('.selected').each(function () {
                                 $(this).removeClass('selected');
                             });" id="main_canvas" class="drawCanavs" width="" height="auto" style="z-index: 0"></canvas>
@@ -113,17 +116,19 @@
                 <div class="col-3" id="sidemenu">
                     <br>
                     <form class="navbar-form navbar-right form-inline" role="search">
-                       <p>
-                           Rule Search
-                       </p>
-                        <select data-size="10" data-width="auto" data-live-search="true" data-style="btn-primary" id="dsa_searchbar">
+                        <p>
+                            Rule Search
+                        </p>
+                        <select data-size="10" data-width="auto" data-live-search="true" data-style="btn-primary"
+                                id="dsa_searchbar">
 
                         </select>
                     </form>
                     <br>
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#files"><i class="fas fa-folder-open"></i></a>
+                            <a class="nav-link active" data-toggle="tab" href="#files"><i
+                                    class="fas fa-folder-open"></i></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#backs"><i class="fas fa-tv"></i></a>
@@ -133,6 +138,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#pages"><i class="fas fa-file"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#quickcreate"><i class="fas fa-fighter-jet"></i></a>
                         </li>
                     </ul>
                     <br>
@@ -152,12 +160,14 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="pages_pageName" aria-label="Name...">
                                     <div class="input-group-append">
-                                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+                                        <button class="btn btn-primary dropdown-toggle" type="button"
+                                                data-toggle="dropdown" aria-haspopup="true"
                                                 aria-expanded="false">Add...
                                         </button>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" href="#" onClick="addNewPage()">Add</a>
-                                            <a class="dropdown-item" href="#" onClick="addNewBackgroundFromCanvas()">Add as Background</a>
+                                            <a class="dropdown-item" href="#" onClick="addNewBackgroundFromCanvas()">Add
+                                                as Background</a>
 
                                         </div>
                                     </div>
@@ -188,20 +198,55 @@
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" id="bg_directURL" aria-label="URL...">
                                         <div class="input-group-append">
-                                            <a class="input-group-text btn" onClick="setCanvasBackground($('#bg_directURL').val())">Load</a>
+                                            <a class="input-group-text btn"
+                                               onClick="setCanvasBackground($('#bg_directURL').val())">Load</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div id="">
-                                <div class="list-group " id="bg_data" style="  overflow-y: auto;max-height: 60vh;"></div>
+                                <div class="list-group " id="bg_data"
+                                     style="  overflow-y: auto;max-height: 60vh;"></div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="notes">
                             <h5>Notes</h5>
                             <hr>
                             <textarea class="form-control makeDark" rows="20" id="noteBox"></textarea>
+                        </div>
+                        <div class="tab-pane fade" id="quickcreate">
+                            <h5>Quickcreate</h5>
+                            <hr>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Quick-Icon</h6>
+
+                                    <div class="form-group">
+                                        <label>SizeX</label>
+                                        <input type="number" class="form-control" id="quick_icsizex">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>SizeY</label>
+                                        <input type="number" class="form-control" id="quick_icsizey">
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                        <button onClick="quickImportImg();" type="button" class="btn btn-primary">Import Image
+                                        </button>
+
+                                        <button id="quick_adsICBtn" onClick="quickAddIcon();" type="button" class="btn btn-success">Add Icon</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Quick-Background</h6>
+                                    <button onClick="quickImportBackground();" type="button" class="btn btn-primary">Choose Background from file
+                                    </button>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -223,9 +268,11 @@
                                      style="position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
                                     <a class="dropdown-item" href="#"
                                        onClick="drawColor='black'; switchDrawMode('pen');">Schwarz</a>
-                                    <a class="dropdown-item" href="#" onClick="drawColor='blue'; switchDrawMode('pen');">Blau</a>
+                                    <a class="dropdown-item" href="#"
+                                       onClick="drawColor='blue'; switchDrawMode('pen');">Blau</a>
                                     <a class="dropdown-item" href="#" onClick="drawColor='red'; switchDrawMode('pen')">Rot</a>
-                                    <a class="dropdown-item" href="#" onClick="drawColor='green'; switchDrawMode('pen');">Grün</a>
+                                    <a class="dropdown-item" href="#"
+                                       onClick="drawColor='green'; switchDrawMode('pen');">Grün</a>
                                 </div>
                             </div>
                         </div>
@@ -257,7 +304,8 @@
                         <div style="margin-left: 5px;"></div>
                         <div style="margin-left: 5px;"></div>
                         <button type="button" class="btn btn-primary"
-                                onClick="togglePointer();$(this).toggleClass('btn-outline-primary')"><i class="fas fa-map-marker-alt"></i>
+                                onClick="togglePointer();$(this).toggleClass('btn-outline-primary')"><i
+                                class="fas fa-map-marker-alt"></i>
                         </button>
                         <div class="d-flex justify-content-end" style="left: 69%; position: absolute">
                             <div style="margin-left: 5px;"></div>
@@ -288,7 +336,8 @@
                         <div class="form-group">
                             <label>Background Zoom</label>
                             <div class="slidecontainer">
-                                <input type="range" min="100" max="200" value="100" class="slider" id="quick_set_zoom_slide">
+                                <input type="range" min="100" max="200" value="100" class="slider"
+                                       id="quick_set_zoom_slide">
                             </div>
                         </div>
 
@@ -418,7 +467,8 @@
         </div>
 
 
-        <div class="modal fade " id="ruleModal" tabindex="-1" role="dialog" aria-labelledby="ruleModalLabel" aria-hidden="true">
+        <div class="modal fade " id="ruleModal" tabindex="-1" role="dialog" aria-labelledby="ruleModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -495,7 +545,8 @@
                 </div>
             </div>
         </div>
-        <div id="quick_health" style="display:none; position: absolute;width: 30%;left:69%;bottom: 7%; max-height: 80%;overflow-y: scroll">
+        <div id="quick_health"
+             style="display:none; position: absolute;width: 30%;left:69%;bottom: 7%; max-height: 80%;overflow-y: scroll">
             <div class="card border-secondary">
                 <div class="card-header">Health</div>
                 <div class="card-body">
@@ -523,7 +574,6 @@
         </div>
 
 
-
     </div>
 </div>
 
@@ -531,7 +581,7 @@
 
     (function () {
 
-        const { BrowserWindow } = require('electron').remote
+        const {BrowserWindow} = require('electron').remote
 
         function init() {
             document.getElementById("min-btn").addEventListener("click", function (e) {
@@ -576,6 +626,7 @@
 <script src="js/html2canvas.js"></script>
 <script src="js/base64.js"></script>
 <script src="js/spectrum.js"></script>
+<script src="js/mousetrap.js"></script>
 <script src="draw.js"></script>
 <script src="js/fileBrowser.js"></script>
 <script src="core.js"></script>

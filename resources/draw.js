@@ -18,6 +18,8 @@ function switchDrawMode(mode) {
     drawMode = mode;
 }
 
+
+
 function togglePointer(){
     tg = !tg;
     if(tg){

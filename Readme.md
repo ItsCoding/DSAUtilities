@@ -37,3 +37,4 @@ Just run the following code in the project folder:
  * [Fontawsome](https://fontawesome.com/)
  * [jQuery](https://jquery.com/)
  * [Mac like buttons](https://bootsnipp.com/snippets/z8ZVX)
+ * [Mousetrap](https://github.com/ccampbell/mousetrap)

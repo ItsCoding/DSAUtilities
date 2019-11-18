@@ -58,25 +58,31 @@ function newProjekt() {
 }
 
 function initIPC(){
-   ipcRenderer.on("updater",(event,args) => {
-       if(args.case == "check"){
-           if(args.update_available == true){
-               console.log(args);
-               $('#update_vers').html(args.info.version);
-               $('#update_notes').html(args.info.releaseNotes);
-               $('#updater').hide();
-               $('#update-avail').show();
-           }else{
-               $('#updater').hide();
-               $('#menu').show();
-           }
-       }else if(args.case == "progress"){
-           var obj = args.obj;
-           $('#dl_pr').text((Math.round(obj.percent * 100) / 100) + "%").width(obj.percent + "%");
-           $('#dl_speed').text((obj.bytesPerSecond / 1e+6) + "MB/s");
-           $('#dl_total').text((obj.transferred / 1e+6) + "/" + (obj.total / 1e+6) + "MB");
-       }
-   })
+    if(app.isPackaged){
+        ipcRenderer.on("updater",(event,args) => {
+            if(args.case == "check"){
+                if(args.update_available == true){
+                    console.log(args);
+                    $('#update_vers').html(args.info.version);
+                    $('#update_notes').html(args.info.releaseNotes);
+                    $('#updater').hide();
+                    $('#update-avail').show();
+                }else{
+                    $('#updater').hide();
+                    $('#menu').show();
+                }
+            }else if(args.case == "progress"){
+                var obj = args.obj;
+                $('#dl_pr').text((Math.round(obj.percent * 100) / 100) + "%").width(obj.percent + "%");
+                $('#dl_speed').text((obj.bytesPerSecond / 1e+6) + "MB/s");
+                $('#dl_total').text((obj.transferred / 1e+6) + "/" + (obj.total / 1e+6) + "MB");
+            }
+        })
+    }else{
+        $('#updater').hide();
+        $('#menu').show();
+    }
+
 }
 
 function callForUpdate(){

@@ -1,4 +1,4 @@
-const {performance} = require('perf_hooks');
+﻿const {performance} = require('perf_hooks');
 var sizeof = require('object-sizeof');
 var start_inittime = performance.now();
 const {app, BrowserWindow, ipcMain} = require('electron');
@@ -77,9 +77,12 @@ function createWindow() {
         myConsole.log(info);
     });
     autoUpdater.on('update-not-available', (info) => {
+        myConsole.log("No Update Available");
         mainWindow.webContents.send('updater', {case: "check", update_available: false});
     });
     autoUpdater.on('error', (err) => {
+        myConsole.log("Error in Updater:");
+        myConsole.log(err);
         mainWindow.webContents.send('updater', {case: "check", update_available: false});
     });
 
@@ -92,8 +95,8 @@ function createWindow() {
     });
 
     autoUpdater.on('update-downloaded', (info) => {
-        myConsole.log("Download completed")
-        //autoUpdater.quitAndInstall();
+        myConsole.log("Download completed");
+        autoUpdater.quitAndInstall();
     });
 
     ipcMain.on('global', (event, arg) => {
@@ -114,13 +117,16 @@ function createWindow() {
         if (arg.method == 1) {
             myConsole.log("ÍPC <=STORE== " + sizeof(arg.value) + "B")
             global[arg.prop] = arg.value;
+            if(arg.prop === "screen_externalDisplay" || arg.prop === "screen_fullscreen" ){
+              config.set(arg.prop, arg.value);
+              myConsole.log("CONFIG <== " + arg.prop)
+            }
             event.returnValue = true
         } else if (arg.method == 2) {
             myConsole.log("ÍPC ==GET=> " + sizeof(global[arg.prop]) + "B")
             event.returnValue = global[arg.prop]
         }
     })
-    fullscreen = false
     if (fullscreen) {
         presentationWindow = new BrowserWindow({
             width: 1920,
