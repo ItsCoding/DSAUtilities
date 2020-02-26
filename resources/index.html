@@ -449,11 +449,11 @@
                                     data-dismiss="modal">Delete
                             </button>
                             <button type="button" class="btn btn-primary"
-                                    onClick="$('#' + lastFocused + '-img').height($('#' + lastFocused + '-img').height() + 20); $('#' + lastFocused + '-img').width($('#' + lastFocused + '-img').width() + 20);bcChannel.postMessage({type: 'changeSize',id: lastFocused,value: 20});"
+                                    onClick="$('#' + lastFocused + '-img').height($('#' + lastFocused + '-img').height() + 20); $('#' + lastFocused + '-img').width($('#' + lastFocused + '-img').width() + 20);bcChannel.postMessage({type: 'changeSize',id: lastFocused,value: 20 * grndScale});"
                             >+ Size
                             </button>
                             <button type="button" class="btn btn-primary"
-                                    onClick="$('#' + lastFocused + '-img').height($('#' + lastFocused + '-img').height() - 20); $('#' + lastFocused + '-img').width($('#' + lastFocused + '-img').width() - 20);bcChannel.postMessage({type: 'changeSize',id: lastFocused,value: -20});"
+                                    onClick="$('#' + lastFocused + '-img').height($('#' + lastFocused + '-img').height() - 20); $('#' + lastFocused + '-img').width($('#' + lastFocused + '-img').width() - 20);bcChannel.postMessage({type: 'changeSize',id: lastFocused,value: -20 * grndScale});"
                             >- Size
                             </button>
                             <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick="$('#' + lastFocused).width(document.getElementById('set_res_slide_x').value);$('#' + lastFocused).height(document.getElementById('set_res_slide_y').value);">Resize</button>
@@ -681,4 +681,3 @@
     require('./renderer.js');
 </script>
 </body>
-

@@ -51,9 +51,10 @@ function createWindow() {
             return display.bounds.x !== 0 && display.bounds.y !== 0
         })
         config.set("screen_fullscreen", fullscreen);
-        if (fullscreen) {
-            config.set("screen_externalDisplay", externalDisplay);
-        }
+        //if (fullscreen) {
+        myConsole.log(externalDisplay);
+        config.set("screen_externalDisplay", externalDisplay);
+        //}
     }
     myConsole.log("Main.js ==> Display init Finished")
     storeStorrageNode("screen_externalDisplay", externalDisplay);

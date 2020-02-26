@@ -133,7 +133,7 @@ async function initDSACore() {
         console.debug("Change Background Size to: " + val + "%");
 
     });
-	
+
 	$('#quick_set_zoom_slide').change(function () {
 		console.log("BG Zoom called");
         var val = document.getElementById("quick_set_zoom_slide").value;
@@ -397,7 +397,11 @@ function setupDisplaySettingSelect() {
         var bounds = parseInt(displays[dsp].bounds.x) + parseInt(displays[dsp].bounds.y);
         if (bounds !== 0) {
             var selected = "";
-            if (aktualDisplay.bounds.x === displays[dsp].bounds.x && aktualDisplay.bounds.x === displays[dsp].bounds.x) selected = "selected";
+            try{
+              if (aktualDisplay.bounds.x === displays[dsp].bounds.x && aktualDisplay.bounds.x === displays[dsp].bounds.x) selected = "selected";  
+            }catch(ex){
+              console.error(ex);
+            }
 
 
             $('#settings_displaySelect').append("<option + " + selected + " value='" + dsp + "'>Monitor " + dsp + "</option>");
@@ -515,7 +519,7 @@ function toggleSideMenu(tgl) {
 }
 
 function initShortcuts() {
-    
+
 
 }
 
