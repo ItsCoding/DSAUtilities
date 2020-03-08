@@ -15,6 +15,7 @@ var loader_progress = 0;
 var noteBox = "";
 var quick_iconBase64 = "";
 var quick_iconCounter = 0;
+var scale = 1;
 String.prototype.replaceAll = function (search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
@@ -87,7 +88,40 @@ function processFiles(fileNames) {
     fileJson.push(jsonObj);
 }
 
+function zoomDraw(event) {
+    event.preventDefault();
 
+    var sc = parseInt($('#main_canvas_bg').css('background-size'));
+
+    if(event.deltaY > 0){
+        sc = sc -1;
+    }else{
+        sc += 1;
+    }
+
+    // Apply scale transform
+    $('#main_canvas_bg').css("background-size", sc + "%");
+    bcChannel.postMessage({type: "zoom", e:  sc})
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.code === "ArrowLeft"){
+        var x = parseInt($('#main_canvas_bg').css('background-position-x')) - 10 * scale;
+        $('#main_canvas_bg').css('background-position-x', x  +'%');
+    }
+    else if (e.code === "ArrowRight"){
+        var x = parseInt($('#main_canvas_bg').css('background-position-x')) + 10 * scale;
+        $('#main_canvas_bg').css('background-position-x', x  +'%');
+    }
+    else if(e.code === "ArrowUp"){
+        var x = parseInt($('#main_canvas_bg').css('background-position-y')) -+ 10 * scale;
+        $('#main_canvas_bg').css('background-position-y', x  +'%');
+    }
+    else if(e.code === "ArrowDown"){
+        var x = parseInt($('#main_canvas_bg').css('background-position-y')) + 10 * scale;
+        $('#main_canvas_bg').css('background-position-y', x  +'%');
+    }
+});
 
 function loadAllVariables() {
     var obj = ipcRenderer.sendSync('global', {method:2,prop:"prj"});
@@ -175,6 +209,7 @@ async function initDSACore() {
     actualSelectedJson = [fileJson];
     renderFileObj(-1);
     $.LoadingOverlay("hide");
+    document.getElementById('canvasDiv').addEventListener('wheel', zoomDraw);
 }
 
 function loadSearchJsonToBar() {

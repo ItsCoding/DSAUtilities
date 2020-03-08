@@ -160,8 +160,12 @@ function msgToAction(msg){
         case "pres_scroll":
             $('#pres-content').scrollTop(msg.scroll);
             break;
+        case "zoom":
+            $('#main_canvas_bg').css("background-size", msg.e + "%");
+            break;
     }
 }
+
 
 function showRule(url){
     $('#pres-content').html(url);

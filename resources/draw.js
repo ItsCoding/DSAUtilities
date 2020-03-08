@@ -106,6 +106,8 @@ function draw(e) {
         lastPt = {x: e.pageX, y: e.pageY};
     }
 
+
+
 }
 
 function endPointer(e) {
